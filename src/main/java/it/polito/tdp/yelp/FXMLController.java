@@ -38,7 +38,7 @@ public class FXMLController {
     private TextField txtX2; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbAnno"
-    private ComboBox<?> cmbAnno; // Value injected by FXMLLoader
+    private ComboBox<Integer> cmbAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtN"
     private TextField txtN; // Value injected by FXMLLoader
@@ -54,7 +54,22 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	String minReview = txtN.getText();
+    	int minRev;
+    	Integer anno;
+    	try {
+    		minRev = Integer.parseInt(minReview);
+    		anno = cmbAnno.getValue();
+    		if(anno == null) {
+    			txtResult.setText("Ciccio devi selezionare un anno valido");
+    			return;
+    		}
+    		model.creaGrafo(minRev, anno);
+    	}
+    		catch(NumberFormatException e){
+    		e.printStackTrace();
+    		txtResult.setText("Ciccio devi mettermi un numero");
+    		}
     }
 
     @FXML
@@ -79,6 +94,10 @@ public class FXMLController {
         assert cmbUtente != null : "fx:id=\"cmbUtente\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtX1 != null : "fx:id=\"txtX1\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
+        
+        for(int anno = 2005; anno < 2014; anno++) {
+        	cmbAnno.getItems().add(anno);
+        }
 
     }
     
